@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+
+    <AssemblyName>Content.SpaceWayBlueprints</AssemblyName>
+    <Nullable>enable</Nullable>
+
+    <EngineDir Condition="'$(EngineDir)' == ''">$(LOCALAPPDATA)\SpaceWayLauncher\engines\extracted</EngineDir>
+
+    <ContentDir Condition="'$(ContentDir)' == ''">$(LOCALAPPDATA)\SpaceWayLauncher\content-extracted</ContentDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Robust.Shared">
+      <HintPath>$(EngineDir)\Robust.Shared.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Robust.Shared.Maths">
+      <HintPath>$(EngineDir)\Robust.Shared.Maths.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Robust.Client">
+      <HintPath>$(EngineDir)\Robust.Client.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="Content.Shared">
+      <HintPath>$(ContentDir)\Content.Shared.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Content.Client">
+      <HintPath>$(ContentDir)\Content.Client.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="CheckEngineDir" BeforeTargets="BeforeBuild">
+    <Error Condition="!Exists('$(EngineDir)\Robust.Shared.dll')"
+           Text="Engine assemblies not found in $(EngineDir). See README." />
+    <Error Condition="!Exists('$(ContentDir)\Content.Client.dll')"
+           Text="Content.Client.dll not found in $(ContentDir). See README." />
+  </Target>
+
+</Project>
